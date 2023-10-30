@@ -7,24 +7,24 @@ import java.time.format.DateTimeFormatter;
 public class Event {
     private String title;
     private LocalDate date;
-    private int totalPlace;
-    private int reservedPlace;
+    private int totalSeats;
+    private int reservedSeat;
 
     //CONSTRUCTOR
 
 
-    public Event(String title, LocalDate date, int totalPlace) throws Exception{
+    public Event(String title, LocalDate date, int totalSeats) throws Exception{
         if (date.isBefore(LocalDate.now())) {
             throw new Exception("The event date has already passed.");
         }
-        if (totalPlace <= 0) {
+        if (totalSeats <= 0) {
             throw new Exception("The total number of seats must be positive.");
         }
 
         this.title = title;
         this.date = date;
-        this.totalPlace = totalPlace;
-        this.reservedPlace = 0;
+        this.totalSeats = totalSeats;
+        this.reservedSeat = 0;
     }
 
     //GETTER - SETTER
@@ -46,34 +46,34 @@ public class Event {
         return date;
     }
 
-    public int getTotalPlace() {
-        return totalPlace;
+    public int getTotalSeats() {
+        return totalSeats;
     }
 
-    public int getReservedPlace() {
-        return reservedPlace;
+    public int getReservedSeat() {
+        return reservedSeat;
     }
 
     //METHODS
 
-    public void reserve(int numPlaces) throws Exception {
+    public void reserve(int numSeats) throws Exception {
         if (date.isBefore(LocalDate.now())) {
             throw new Exception("The event has already passed.");
         }
-        if (reservedPlace + numPlaces > totalPlace) {
+        if (reservedSeat + numSeats > totalSeats) {
             throw new Exception("There are not enough places available.");
         }
-        reservedPlace += numPlaces;
+        reservedSeat += numSeats;
     }
 
-    public void cancel(int numPlaces) throws Exception {
+    public void cancel(int numSeats) throws Exception {
         if (date.isBefore(LocalDate.now())) {
             throw new Exception("The event has already passed.");
         }
-        if (reservedPlace - numPlaces < 0){
+        if (reservedSeat - numSeats < 0){
             throw new Exception("There are no reservations to cancel.");
         }
-        reservedPlace -= numPlaces;
+        reservedSeat -= numSeats;
     }
 
     @Override
