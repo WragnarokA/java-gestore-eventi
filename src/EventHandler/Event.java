@@ -1,7 +1,8 @@
 package EventHandler;
 
 import java.time.LocalDate;
-import java.util.Locale;
+import java.time.format.DateTimeFormatter;
+
 
 public class Event {
     private String title;
@@ -35,7 +36,6 @@ public class Event {
         if (date.isBefore(LocalDate.now())) {
             throw new Exception("The event date has already passed.");
         }
-        this date = date;
     }
 
     public String getTitolo() {
@@ -56,19 +56,31 @@ public class Event {
 
     //METHODS
 
-    public void reserve(int numPlace) throws Exception {
+    public void reserve(int numPlaces) throws Exception {
         if (date.isBefore(LocalDate.now())) {
             throw new Exception("The event has already passed.");
         }
-        if (reservedPlace + numPlace > totalPlace) {
+        if (reservedPlace + numPlaces > totalPlace) {
             throw new Exception("There are not enough places available.");
         }
-        reservedPlace += numPlace;
+        reservedPlace += numPlaces;
     }
 
+    public void cancel(int numPlaces) throws Exception {
+        if (date.isBefore(LocalDate.now())) {
+            throw new Exception("The event has already passed.");
+        }
+        if (reservedPlace - numPlaces < 0){
+            throw new Exception("There are no reservations to cancel.");
+        }
+        reservedPlace -= numPlaces;
+    }
 
-
-
+    @Override
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd,MM,yyyy");
+        return formatter.format(date) + " - " + title;
+    }
 }
 
 
